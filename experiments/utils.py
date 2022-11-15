@@ -56,7 +56,7 @@ def plt_transformation(trange, x_0, ham, ax, ax2):
 
 def randang(): return np.random.uniform(0, 2*np.pi)
 
-def plot_bloch_regions(ax, barrier=False):
+def plot_H_bloch_regions(ax, barrier=False):
     state_size = 300
     # Plot |0> and |1>
     ax.scatter(0,0,1.05, label='|0>', marker='^', s=state_size, c='black', zorder=100)
@@ -91,11 +91,61 @@ def plot_bloch_regions(ax, barrier=False):
         f = 0
         # Edge cases (closest to unsafe/initial resp.)
         # f = .4**2
-        # f = -(.4**2)
+        f = -(.4**2)
         Z = np.array([[f] * len(X[0])] * len(X))
         xp = 1/np.sqrt(2) * (X -Z)
         yp = Y
         zp = 1/np.sqrt(2) * -(X + Z)
+        ax.plot_surface(xp,yp,zp, alpha=0.2)
+
+    ax.set_xlabel(u'x', fontproperties=prop, rotation=0, labelpad=10)
+    ax.set_ylabel(u'y', fontproperties=prop, rotation=0, labelpad=10)
+    ax.set_zlabel(u'z', fontproperties=prop, rotation=0, labelpad=10)
+
+    ax.set_xlim(-1,1)
+    ax.set_ylim(-1,1)
+    ax.set_zlim(-1,1)
+    
+def plot_S_bloch_regions(ax, barrier=False, init=0):
+    state_size = 300
+    # Plot |0> and |1>
+    ax.scatter(0,0,1.05, label='|0>', marker='^', s=state_size, c='black', zorder=100)
+    ax.scatter(0,0,-1.05, label='|1>', marker='v', s=state_size, c='black', zorder=100)
+    
+    # Plot sphere
+    phi = np.linspace(0, np.pi, 20)
+    theta = np.linspace(0, 2 * np.pi, 40)
+    x = np.outer(np.sin(theta), np.cos(phi))
+    y = np.outer(np.sin(theta), np.sin(phi))
+    z = np.outer(np.cos(theta), np.ones_like(phi))
+    ax.plot_surface(x, y, z,  rstride=1, cstride=1, color='w', alpha=0.3, linewidth=0)
+    
+    # Plot initial
+    phi = np.linspace(0, 2*np.pi, 20)
+    if init == 0: theta = np.linspace(0, 2*np.arccos(np.sqrt(0.9)), 40)
+    elif init == 1: theta = np.linspace(np.pi, 2*np.arccos(np.sqrt(0.1)), 40)
+    x = np.outer(np.sin(theta), np.cos(phi))
+    y = np.outer(np.sin(theta), np.sin(phi))
+    z = np.outer(np.cos(theta), np.ones_like(phi))
+    ax.plot_surface(x,y,z, color='g', alpha=0.7)
+    
+    # Plot unsafe
+    if init == 0: theta = np.linspace(np.pi, 2*np.arccos(np.sqrt(0.89)), 40)
+    if init == 1: theta = np.linspace(0, 2*np.arccos(np.sqrt(0.11)), 40)
+    x = np.outer(np.sin(theta), np.cos(phi))
+    y = np.outer(np.sin(theta), np.sin(phi))
+    z = np.outer(np.cos(theta), np.ones_like(phi))
+    ax.plot_surface(x,y,z, color='r', alpha=0.2)
+    
+    # Plot barrier
+    if barrier:
+        X,Y = np.meshgrid(np.arange(-1.1,1.1,step=0.1), np.arange(-1.1,1.1,step=0.1))
+        # Check value of f
+        f = 0.8 * (-1) ** init
+        Z = np.array([[f] * len(X[0])] * len(X))
+        xp = X
+        yp = Y
+        zp = Z
         ax.plot_surface(xp,yp,zp, alpha=0.2)
 
     ax.set_xlabel(u'x', fontproperties=prop, rotation=0, labelpad=10)
