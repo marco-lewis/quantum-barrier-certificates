@@ -29,7 +29,7 @@ prop = mpl.font_manager.FontProperties()
 prop.set_file('/usr/share/fonts/truetype/tibetan-machine/TibetanMachineUni.ttf')
 prop.set_size(14)
 
-save = lambda file: plt.savefig(file, bbox_inches='tight', pad_inches=0)
+save = lambda file: plt.savefig("Images/" + file, bbox_inches='tight', pad_inches=0)
 
 def ham(op):
     return lambda t: expm(-1j *op * t)
@@ -146,7 +146,7 @@ def plot_S_bloch_regions(ax, barrier=False, init=0):
         xp = X
         yp = Y
         zp = Z
-        ax.plot_surface(xp,yp,zp, alpha=0.2)
+        ax.plot_surface(xp,yp,zp, alpha=0.5)
 
     ax.set_xlabel(u'x', fontproperties=prop, rotation=0, labelpad=10)
     ax.set_ylabel(u'y', fontproperties=prop, rotation=0, labelpad=10)
