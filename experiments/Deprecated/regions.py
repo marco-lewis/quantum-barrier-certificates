@@ -15,6 +15,8 @@ def near_1():
 
 def near_0_sup():
     r = np.random.uniform(np.sqrt(0.9), 1)
+    ang0 = np.random.uniform(0, 2*np.pi)
+    ang1 = np.random.uniform(0, 2*np.pi)
     z0 = r * np.exp(1j*ang0)
     z1 = np.sqrt(1 - r**2) * np.exp(1j*ang1)
     return [z0, z1]

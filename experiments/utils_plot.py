@@ -1,12 +1,26 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy.linalg import expm
 
 import cmasher as cmr
 from IPython.display import HTML
 from matplotlib import animation
 from mpl_toolkits.mplot3d import Axes3D
+
+trange = np.arange(0, 2*np.pi, 0.01)
+
+isqrt2 = 1/np.sqrt(2)
+had = np.array([[isqrt2, isqrt2], [isqrt2, -isqrt2]])
+X = np.array([[0,1],[1,0]])
+Y = np.array([[0,1j],[-1j,0]])
+Z = np.array([[1,0],[0,-1]])
+
+def ham(op):
+    return lambda t: expm(-1j *op * t)
+
+def had_ham(t):
+    return expm(-1j * had * t)
 
 prop = mpl.font_manager.FontProperties()
 prop.set_file('/usr/share/fonts/truetype/tibetan-machine/TibetanMachineUni.ttf')

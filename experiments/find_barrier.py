@@ -4,24 +4,22 @@ import warnings
 from FuncClasses import *
 from utils import *
 
-import numpy as np
-import sympy as sym
 from scipy.optimize import Bounds, minimize, linprog, OptimizeWarning
 
-def diff_fsum(fsum, i):
+def diff_fsum(funcsum, var_loc):
     new_fsum = []
-    for fterm in fsum.fterms:
+    for fterm in funcsum.fterms:
         t = deepcopy(fterm.var)
-        if t[i] != 0:
-            c = fterm.coeff * t[i]
-            t[i] -= 1
+        if t[var_loc] != 0:
+            c = fterm.coeff * t[var_loc]
+            t[var_loc] -= 1
             new_fsum.append(FuncTerm(c, t))
     return FuncSum(new_fsum)
 
 def scipy_find_b(barrier, states, f_vec, term_powers, prec=2, linprog_obj=[]):
     # Make appropriate conditions using representation
     dbdz = FuncVec([diff_fsum(barrier, i) for i in range(states)])
-    dbdzconj = FuncVec([diff(barrier, i) for i in range(states, 2*states)])
+    dbdzconj = FuncVec([diff_fsum(barrier, i) for i in range(states, 2*states)])
     dbdt = (dbdz * f_vec) + (dbdzconj * f_vec.conj())
     barr_minus_conj = barrier - barrier.conj()
     

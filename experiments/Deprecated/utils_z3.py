@@ -29,9 +29,6 @@ def print_all_models(s):
         raise Exception("No models found!")
     return models
 
-def get_real_from_model(model, var, prec=2):
-    return round(float(model[var].numerator_as_long())/float(model[var].denominator_as_long()),prec)
-
 
 
 # Edit of https://stackoverflow.com/a/38980538/19768075
