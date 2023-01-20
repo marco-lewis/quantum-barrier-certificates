@@ -13,7 +13,6 @@ unsafe_constraints= [NonlinearConstraint(unsafe, [.11,1], [1,1])]
 b_cnot = scipy_find_k_barrier(2, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
-                              linprog_obj=[40],
                               verbose=1)
 print_barrier(b_cnot)
 
@@ -28,7 +27,6 @@ unsafe_constraints= [NonlinearConstraint(unsafe, [.11,1], [1,1])]
 b_cnot = scipy_find_k_barrier(2, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
-                              linprog_obj=[40, 31],
                               verbose=1)
 print_barrier(b_cnot)
 
@@ -47,7 +45,6 @@ unsafe_constraints= [NonlinearConstraint(unsafe, [.5,0,1], [1,.5,1])]
 b_cnot = scipy_find_k_barrier(2, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
-                              linprog_obj=[16],
                               verbose=1)
 print_barrier(b_cnot)
 
@@ -62,7 +59,6 @@ unsafe_constraints= [NonlinearConstraint(unsafe, [.11,1], [1,1])]
 b_cnot = scipy_find_k_barrier(2, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
-                              linprog_obj=[16],
                               verbose=1)
 print_barrier(b_cnot)
 
@@ -91,8 +87,6 @@ try:
     b_ctop = scipy_find_k_barrier(2, H,
                                   init=init_constraints,
                                   unsafe=unsafe_constraints,
-                                  linprog_obj=[16,23],
-                                #   linprog_obj=[71,130],
                                   verbose=1)
     print(b_ctop)
 except: print("Fail")

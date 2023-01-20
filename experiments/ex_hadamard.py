@@ -15,7 +15,6 @@ unsafe_constraints = qubit_simple_constraints((0,0.1),(0.9,1))
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[12],
                                verbose=1)
 
 print_barrier(barrier)

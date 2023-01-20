@@ -10,7 +10,6 @@ unsafe_constraints = qubit_simple_constraints((0,np.sqrt(0.89)),(np.sqrt(0.11),1
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[12],
                                verbose=1)
 print_barrier(barrier)
 
@@ -21,7 +20,6 @@ unsafe_constraints = qubit_simple_constraints((np.sqrt(0.11),1),(0,np.sqrt(0.89)
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[7],
                                verbose=1)
 print_barrier(barrier)
 
@@ -33,7 +31,6 @@ unsafe_constraints = qubit_simple_constraints((np.sqrt(0.11),1),(0,np.sqrt(0.89)
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[7],
                                verbose=1)
 print_barrier(barrier)
 
@@ -45,7 +42,6 @@ unsafe_constraints = qubit_simple_constraints((np.sqrt(0.7),1),(0,np.sqrt(0.3)))
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[7],
                                verbose=1)
 print_barrier(barrier)
 
@@ -55,6 +51,5 @@ unsafe_constraints = qubit_simple_constraints((0,np.sqrt(0.3)),(np.sqrt(0.7),1))
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[12],
                                verbose=1)
 print_barrier(barrier)

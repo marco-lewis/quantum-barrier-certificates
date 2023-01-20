@@ -16,7 +16,7 @@ def diff_fsum(funcsum, var_loc):
             new_fsum.append(FuncTerm(c, t))
     return FuncSum(new_fsum)
 
-def scipy_find_b(barrier, states, f_vec, term_powers, prec=2, linprog_obj=[]):
+def scipy_find_b(barrier, states, f_vec, term_powers, prec=2):
     # Make appropriate conditions using representation
     dbdz = FuncVec([diff_fsum(barrier, i) for i in range(states)])
     dbdzconj = FuncVec([diff_fsum(barrier, i) for i in range(states, 2*states)])
@@ -33,8 +33,7 @@ def scipy_find_b(barrier, states, f_vec, term_powers, prec=2, linprog_obj=[]):
     A = np.array(A_dbdt + A_conj)
     b = np.array(b_dbdt + b_conj)
     # Minimize vector (min c^T x subject to ...)
-    c = np.array([0]*len(term_powers))
-    for i in linprog_obj: c[i] = 1
+    c = np.ones(len(term_powers))
     
     # Negate A doesn't matter unless used for A_ub
     res = linprog(c,
@@ -94,7 +93,7 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     if -minimum >= c : raise Exception(str(barrier_sym) + "\nError: proposed barrier has part of unsafe in same contour as initial region")
 
 # Setup coefficients as ndarray
-def scipy_find_k_barrier(k, H, init=[], unsafe=[], linprog_obj = [], prec=2, verbose=False):
+def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False):
     z = -1j
     n = round(len(H))
     term_powers = generate_term_powers(k, n)
@@ -117,7 +116,7 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], linprog_obj = [], prec=2, ver
     barrier = FuncSum(list([FuncTerm(i, t) for i, t in zip(id_coeff, term_powers)]))
     if verbose: print("Finding polynomial...")
     warnings.simplefilter("ignore", OptimizeWarning)
-    b = scipy_find_b(barrier, n, f_vec, term_powers, prec, linprog_obj)
+    b = scipy_find_b(barrier, n, f_vec, term_powers, prec)
     if verbose: print("Polynomial found: ", b)
     
     if verbose: print("Finding constant...")

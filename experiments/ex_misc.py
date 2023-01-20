@@ -17,8 +17,6 @@ try:
     barrier = scipy_find_k_barrier(2, H,
                                    init=init_constraints,
                                    unsafe=unsafe_constraints,
-                                   linprog_obj=[0,1],
-                                   # linprog_obj=list(range(14)),
                                    verbose=1)
     print_barrier(barrier)
 except:
@@ -39,7 +37,6 @@ unsafe_constraints = qubit_simple_constraints((0,0.89),(0.11,1))
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[0,12],
                                verbose=1)
 print_barrier(barrier)
 
@@ -50,6 +47,5 @@ unsafe_constraints = qubit_simple_constraints((0.11,1),(0,0.89))
 barrier = scipy_find_k_barrier(2, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
-                               linprog_obj=[0,7],
                                verbose=1)
 barrier
