@@ -16,19 +16,23 @@ def dbdzconj(z):
     return diff_conj
 
 # Attempt 2
+z_const = 2
 sum_term = lambda z: sum([z[0] * conj(zi) for zi in z[1:]]) + sum([conj(z[0]) * zi for zi in z[1:]])
-barrier = lambda z: 1.7 - 2 * z[0] * conj(z[0]) - sum_term(z)
+barrier = lambda z: 1.2 - (z_const * z[0] * conj(z[0]) + sum_term(z))
 
 def dbdz(z):
-    diff = [-2 * conj(z[0]) - np.sum([conj(zi) for zi in z[1:]])]
+    diff = [-z_const * conj(z[0]) - np.sum([conj(zi) for zi in z[1:]])]
     for j in range(1, len(z)): diff.append(0 - conj(z[0]))
     return diff
 
 def dbdzconj(z):
-    diff_conj = [-2 * z[0] - np.sum(z[1:])]
+    diff_conj = [-z_const * z[0] - np.sum(z[1:])]
     for j in range(1, len(z)): diff_conj.append(0 - z[0])
     return diff_conj
 
 # Attempt 3
+sum_term = lambda z0, z1: z0 * conj(z1) + conj(z0) * z1
+barrier = lambda z: 1.2 - sum([sum([sum_term(zi, zj) for zj in z]) for zi in z])
+# Differential is prop. to sum(-Im(z_0 * z_x) for zx in z)
 
 # Attempt n
