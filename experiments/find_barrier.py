@@ -16,7 +16,7 @@ def diff_fsum(funcsum, var_loc):
             new_fsum.append(FuncTerm(c, t))
     return FuncSum(new_fsum)
 
-def scipy_find_b(barrier, states, f_vec, term_powers, prec=2):
+def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2):
     # Make appropriate conditions using representation
     dbdz = FuncVec([diff_fsum(barrier, i) for i in range(states)])
     dbdzconj = FuncVec([diff_fsum(barrier, i) for i in range(states, 2*states)])

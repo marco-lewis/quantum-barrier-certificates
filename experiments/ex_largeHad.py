@@ -19,8 +19,14 @@ sos = lambda xs: sum([x**2 for x in xs])
 print("Making Constraints")
 def init(x): return [x[0]**2 + x[1]**2, sos(x)]
 init_constraints = [NonlinearConstraint(init, [0.9, 1], [1, 1])]
-def unsafe(x): return [x[2*i]**2 + x[2*i + 1]**2 for i in range(1,2**n)] + [sos(x)]
-unsafe_constraints= [NonlinearConstraint(unsafe, ([.5] * (2**n - 1)) + [1], [1] * 2**n)]
+# All basis states unsafe
+# def unsafe(x): return [x[2*i]**2 + x[2*i + 1]**2 for i in range(1,2**n)] + [sos(x)]
+# unsafe_constraints= [NonlinearConstraint(unsafe, ([.9] * (2**n - 1)) + [1], [1] * 2**n)]
+
+# |q> state unsafe
+q = 1
+def unsafe(x): return [x[2*q]**2 + x[2*q + 1]**2] + [sos(x)]
+unsafe_constraints= [NonlinearConstraint(unsafe, [.9] + [1], [1] * 2)]
 
 coeff_num = 1
 for i in range(1, k + 1): coeff_num += comb(k, i) * comb(2*N, i)
@@ -30,9 +36,6 @@ if 0:
     for i in range(coeff_num): print(i, tp[i])
 
 bs = []
-if n == 1: c = 12
-elif n == 2: c = 40
-elif n == 3: c = 144
 print("Finding barrier")
 try:
     b_ctop = scipy_find_k_barrier(2, H,
