@@ -19,30 +19,40 @@ def evo(H :np.ndarray, z):
     return [sum([row[j] * z[j] for j in range(n)]) for row in dpsidt]
 
 # Barrier definitions
-z_const = 2
+z_coeff = 2
 sum_term = lambda z: sum([z[0] * conj(zi) for zi in z[1:]]) + sum([conj(z[0]) * zi for zi in z[1:]])
-barrier = lambda z: 1.16 - (z_const * z[0] * conj(z[0]) + sum_term(z))
+barrier = lambda z: 1.2 - (z_coeff * z[0] * conj(z[0]) + sum_term(z))
 
 def dbdz(z):
-    diff = [-z_const * conj(z[0]) - np.sum([conj(zi) for zi in z[1:]])]
+    diff = [-z_coeff * conj(z[0]) - np.sum([conj(zi) for zi in z[1:]])]
     for j in range(1, len(z)): diff.append(0 - conj(z[0]))
     return diff
 
 def dbdzconj(z):
-    diff_conj = [-z_const * z[0] - np.sum(z[1:])]
+    diff_conj = [-z_coeff * z[0] - np.sum(z[1:])]
     for j in range(1, len(z)): diff_conj.append(0 - z[0])
     return diff_conj
 
 # Defining barrier and Hamiltonian for n
 b = barrier
 ham = H_hat_n(n)
+
+# Conditions for barrier
 init = lambda z: Implies(norm_sqrd(z[0]) >= 0.9, And(b(z).r <= 0, b(z).i == 0))
 # unsafe = lambda z: Implies(Or([norm_sqrd(zi) >= 0.9 for zi in z[1:]]), And(b(z).r > 0, b(z).i == 0))
 unsafe = lambda z: Implies(norm_sqrd(z[1]) >= 0.9, And(b(z).r > 0, b(z).i == 0))
 dbdt = lambda z: np.dot(dbdz(z), evo(ham, z)) + np.dot(dbdzconj(z), [conj(e) for e in evo(ham, z)])
 evo_cond = lambda z: And(dbdt(z).r <= 0, dbdt(z).i == 0)
-conds = [evo_cond, init, unsafe]
-strs = ["Evolution", "Init", "Unsafe"]
+conds = [
+    evo_cond,
+    init,
+    unsafe,
+    ]
+strs = [
+    "Evolution",
+    "Init",
+    "Unsafe",
+    ]
 
 if __name__ == "__main__":
     s = z3.Solver()
@@ -54,7 +64,7 @@ if __name__ == "__main__":
         s.add(Not(cond(z)))
         print("Checking...")
         sat = s.check()
-        
+
         if sat == z3.sat:
             print("Found CEx")
             mz = [0] * 2**n
@@ -73,6 +83,7 @@ if __name__ == "__main__":
             print("Norm: ",sum_norm_sqrs(mz))
             print("Barrier value: ", b(mz))
             print("Differential value: ", dbdt(mz))
+            exit()
         else: print(sat)
 
         print()
