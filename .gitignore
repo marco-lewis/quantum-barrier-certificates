@@ -1,5 +1,5 @@
-media/Images/*
-media/Animations/*
-todo/*.py
+media/Images/*.png
+media/Animations/*.gif
+todo/*
 Deprecated/*
 src/__pycache__
