@@ -1,4 +1,5 @@
-experiments/.*
-experiments/__pycache__
-experiments/Images/*.png
-experiments/Animations/*.gif
+images/Images/*.png
+images/Animations/*.gif
+todo/*
+Deprecated/*
+src/__pycache__
