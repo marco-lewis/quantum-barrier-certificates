@@ -3,3 +3,4 @@ media/Animations/*.gif
 todo/*
 Deprecated/*
 src/__pycache__
+env
