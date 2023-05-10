@@ -1,5 +1,6 @@
-media/Images/*.png
+media/__pycache__
 media/Animations/*.gif
+media/Images/*.png
 todo/*
 Deprecated/*
 src/__pycache__
