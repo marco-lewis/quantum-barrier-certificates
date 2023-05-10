@@ -12,4 +12,12 @@ Prototype implementation of barrier certificates for quantum systems.
 
     c. ```pip install -r requirements.txt```
     
-2. Run the examples: ```python ex_<name>.py``` 
+2. Run the examples:
+
+    ```python ex_<name>.py``` 
+
+3. Generating the figures:
+    
+    ```python media/diagrams.py```
+
+    Figures are available in ```media/Images```.
