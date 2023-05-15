@@ -4,7 +4,9 @@ Prototype implementation of barrier certificates for quantum systems.
 
 ## Running the Code
 
-1. Install the requirements file
+The examples are tested on a virtual machine using Python 3.9.5.
+
+1. Install the requirements file (if in the provided VM you only need to run (b) to activate the environment)
 
     a. ```python -m venv env```
 
