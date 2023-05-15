@@ -124,9 +124,9 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     if verbose: print("Polynomial found: ", b)
     
     if verbose: print("Finding constant...")
-    c = scipy_find_constant(b, n, init=init)
+    c = scipy_find_constant(b, n, init=init, prec=prec)
     if verbose: print("Checking...")
-    scipy_check_constant(c, b, n, unsafe=unsafe)
+    scipy_check_constant(c, b, n, unsafe=unsafe, prec=prec)
     if verbose: print("Constant found: ", c)
     
     return round_sympy_expr(c + b)
