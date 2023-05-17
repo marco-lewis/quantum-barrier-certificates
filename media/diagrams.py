@@ -1,4 +1,7 @@
 from utils_plot import *
+
+from IPython.display import HTML
+from matplotlib import animation
 from matplotlib.ticker import FormatStrFormatter
 
 def cartesian_evo(t, x0):

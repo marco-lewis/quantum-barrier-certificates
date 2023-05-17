@@ -5,11 +5,6 @@ from scipy.linalg import expm
 
 import os
 
-import cmasher as cmr
-from IPython.display import HTML
-from matplotlib import animation
-from mpl_toolkits.mplot3d import Axes3D
-
 trange = np.arange(0, 2*np.pi, 0.01)
 
 isqrt2 = 1/np.sqrt(2)
@@ -189,35 +184,3 @@ def rk4(y0, t0, t, h, f):
         t = ts[i] + h
         ts.append(t)
     return np.array(ys), np.array(ts)
-
-def add_arrow(line, position=None, direction='right', size=15, color=None):
-    """
-    add an arrow to a line.
-
-    line:       Line2D object
-    position:   x-position of the arrow. If None, mean of xdata is taken
-    direction:  'left' or 'right'
-    size:       size of the arrow in fontsize points
-    color:      if None, line color is taken.
-    """
-    if color is None:
-        color = line.get_color()
-
-    xdata = line.get_xdata()
-    ydata = line.get_ydata()
-
-    if position is None:
-        position = 0
-    # find closest index
-    start_ind = np.argmin(np.absolute(xdata - position))
-    if direction == 'right':
-        end_ind = start_ind + 1
-    else:
-        end_ind = start_ind - 1
-
-    line.axes.annotate('',
-        xytext=(xdata[start_ind], ydata[start_ind]),
-        xy=(xdata[end_ind], ydata[end_ind]),
-        arrowprops=dict(arrowstyle="->", color=color),
-        size=size
-    )
