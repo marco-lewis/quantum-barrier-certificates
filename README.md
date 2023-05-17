@@ -1,4 +1,4 @@
-# Barrier Certificates for Quantum Systems
+# Verification of Quantum Systems using Barrier Certificates
 
 Prototype implementation of barrier certificates for quantum systems.
 
@@ -22,4 +22,4 @@ The examples are tested on a virtual machine using Python 3.9.5.
     
     ```python media/diagrams.py```
 
-    Figures are available in ```media/Images```.
+    Figures are available in ```media/Images/```.
