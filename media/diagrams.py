@@ -62,7 +62,6 @@ fig = plt.figure(figsize=(8,8))
 ax = fig.add_subplot(111,projection='3d',box_aspect=(1,1,1))
 
 plot_H_bloch_regions(ax)
-plt.axis('off')
 fig.tight_layout()
 save("blank.png")
 plt.close()
@@ -93,8 +92,6 @@ for X0, Z0 in start_points:
     z_vec, o_vec = get_states(trange, Z0, had_ham)
     xs, ys, zs, _ = state_to_bloch(z_vec, o_vec)
 
-
-plt.axis('off')
 
 fig.tight_layout()
 
@@ -203,7 +200,6 @@ for X0, Z0 in start_points:
     z_vec, o_vec = get_states(trange, Z0, had_ham)
     xs, ys, zs, _ = state_to_bloch(z_vec, o_vec)
 
-plt.axis('off')
 fig.tight_layout()
 save('S0_normal_bloch.png')
 
@@ -246,7 +242,6 @@ for X0, Z0 in [cart_bloch_near_1() for t in range(2)]:
     xs, ys, zs, _ = state_to_bloch(z_vec, o_vec)
 
 
-plt.axis('off')
 fig.tight_layout()
 
 save('S1_normal_bloch.png')

@@ -25,8 +25,6 @@ def had_ham(t):
     return expm(-1j * had * t)
 
 prop = mpl.font_manager.FontProperties()
-# prop.set_file('/usr/share/fonts/truetype/tibetan-machine/TibetanMachineUni.ttf')
-# prop.set_size(14)
 
 path = os.path.dirname(os.path.realpath(__file__))
 save = lambda file: plt.savefig(path + "/Images/" + file, bbox_inches='tight', pad_inches=0)
