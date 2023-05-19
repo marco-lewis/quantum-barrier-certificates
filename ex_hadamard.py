@@ -3,7 +3,6 @@ from src.utils import *
 
 # See Section 4.1 of https://doi.org/10.1088/1361-6455/aa987c
 # Hadamard as a Hamiltonian
-# H = [[1/2*np.sqrt(2), 1/2*np.sqrt(2)],[1/2*np.sqrt(2), -1/2*np.sqrt(2)]]
 H = [[1,1],[1,-1]]
 k = 2
 
