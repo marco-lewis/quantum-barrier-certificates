@@ -16,6 +16,7 @@ def diff_fsum(funcsum, var_loc):
             new_fsum.append(FuncTerm(c, t))
     return FuncSum(new_fsum)
 
+# Step 1
 def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2, obj_func_idxs=[]):
     # Make appropriate conditions using representation
     dbdz = FuncVec([diff_fsum(barrier, i) for i in range(states)])
@@ -47,6 +48,7 @@ def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2
                  )
     return barrier.get_sym_sum(res.x, prec)
 
+# Step 2
 def scipy_find_constant(barrier_sym, states, init=[], prec=2):
     # Create objective function from Sympy barrier
     def obj(x):
@@ -72,6 +74,7 @@ def scipy_find_constant(barrier_sym, states, init=[], prec=2):
     minimum = round(res.fun, prec)
     return minimum
 
+# Step 3
 def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     def obj(x):
         z = [x[2*i] + 1j*x[2*i + 1] for i in range(states)]
@@ -96,6 +99,7 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     minimum = round(res.fun, prec)
     if -minimum >= c : raise Exception(str(barrier_sym) + "\nError: proposed barrier has part of unsafe in same contour as initial region")
 
+# Algorithm 1
 def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_func_idxs=[]):
     # Step 0 - setup data structures
     z = -1j
@@ -103,7 +107,9 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     term_powers = generate_term_powers(k, n)
     coeff_num = len(term_powers)
 
-    if verbose: print("Step 0: Converting dynamical system...")
+    if verbose:
+        print("Step 0: Setting up data structures")
+        print("Converting dynamical system...")
     sums = []
     for i in range(n):
         terms = []
@@ -116,8 +122,10 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     f_vec = FuncVec(sums)
     if verbose: print("Dynamical system converted.")
     
+    if verbose: print("Creating barrier representation (B(a,z))...")
     id_coeff = np.identity(coeff_num)
     barrier = FuncSum(list([FuncTerm(i, t) for i, t in zip(id_coeff, term_powers)]))
+    if verbose: print("Barrier created.")
 
     if verbose: print("Step 1: Finding polynomial (b)...")
     warnings.simplefilter("ignore", OptimizeWarning)
@@ -131,5 +139,5 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     scipy_check_constant(c, b, n, unsafe=unsafe, prec=prec)
     if verbose: print("Constant found: c = " + str(c))
     barrier_out = round_sympy_expr(c + b)
-    if verbose: print("Generated barrier: ", barrier_out, "\n")
+    if verbose: print("Generated barrier: B(z) = b + c = " + str(barrier_out) + "\n")
     return barrier_out
