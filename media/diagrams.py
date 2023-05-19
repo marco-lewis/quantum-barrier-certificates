@@ -51,11 +51,8 @@ def start_near_1():
     X0 = x0[0] + x0[1] + x0[2]
     return X0, z0
 
-start_points = []
-for i in range(1):
-    start_points.append(cart_bloch_near_0())
-
-start_points = [([-0.4205748172100388, -0.19077787500541843, 0.8869727309997525], np.array([-0.57843339+0.7803212j ,  0.20781569-0.11543948j]))]
+start_points_0 = [([-0.4205748172100388, -0.19077787500541843, 0.8869727309997525], np.array([-0.57843339+0.7803212j ,  0.20781569-0.11543948j]))]
+start_points_1 = [([-0.019089171625820144, -0.46005262894314497, -0.8876864210570876], np.array([-0.03054791+0.23499705j,  0.96777386+0.08518778j]))]
 
 step = 0.1
 t0 = 0
@@ -69,7 +66,7 @@ ax = fig.add_subplot(111,projection='3d',box_aspect=(1,1,1))
 barrier=True
 plot_H_bloch_regions(ax, barrier)
 
-for X0, Z0 in start_points:
+for X0, Z0 in start_points_0:
     dataSet, ts = rk4(X0, t0, t, step, dXdt)
     dataSet = dataSet.T
     xps, yps, zps = dataSet[0], dataSet[1], dataSet[2]
@@ -86,18 +83,18 @@ for X0, Z0 in start_points:
 fig.tight_layout()
 
 if not barrier: save("had_no_barrier.png")
-save('had_bloch.png')
+save('2a_had_bloch.png')
 ax.set_yticks([])
 ax.set_ylabel('')
 ax.azim = -90
 ax.elev = 1
-save('had_side_bloch.png')
+save('2b_had_side_bloch.png')
 
 ax.set_zticks([])
 ax.set_zlabel('')
 ax.azim = 270
 ax.elev = 90
-save('had_above_bloch.png')
+# save('had_above_bloch.png')
 plt.close()
 print("Hadamard figures stored")
 
@@ -113,7 +110,7 @@ ax = fig.add_subplot(111,projection='3d',box_aspect=(1,1,1))
 
 plot_S_bloch_regions(ax, True)
 
-for X0, Z0 in start_points:
+for X0, Z0 in start_points_0:
     dataSet, ts = rk4(X0, t0, t, step, dXdt)
     dataSet = dataSet.T
     xps, yps, zps = dataSet[0], dataSet[1], dataSet[2]
@@ -128,19 +125,19 @@ for X0, Z0 in start_points:
     xs, ys, zs, _ = state_to_bloch(z_vec, o_vec)
 
 fig.tight_layout()
-save('S0_normal_bloch.png')
+# save('S0_normal_bloch.png')
 
 ax.set_yticks([])
 ax.set_ylabel('')
 ax.azim = -90
 ax.elev = 2
-save('S0_side_bloch.png')
+save('3a_S0_side_bloch.png')
 
 ax.set_zticks([])
 ax.set_zlabel('')
 ax.azim = 270
 ax.elev = 90
-save('S0_above_bloch.png')
+# save('S0_above_bloch.png')
 plt.close()
 print("Phase on |0> figures stored")
 
@@ -155,7 +152,7 @@ ax = fig.add_subplot(111,projection='3d',box_aspect=(1,1,1))
 
 plot_S_bloch_regions(ax, True, init=1)
 
-for X0, Z0 in [cart_bloch_near_1() for t in range(2)]:
+for X0, Z0 in start_points_1:
     dataSet, ts = rk4(X0, t0, t, step, dXdt)
     dataSet = dataSet.T
     xps, yps, zps = dataSet[0], dataSet[1], dataSet[2]
@@ -171,18 +168,18 @@ for X0, Z0 in [cart_bloch_near_1() for t in range(2)]:
 
 fig.tight_layout()
 
-save('S1_normal_bloch.png')
+# save('S1_normal_bloch.png')
 ax.set_yticks([])
 ax.set_ylabel('')
 ax.azim = -90
 ax.elev = -2
-save('S1_side_bloch.png')
+save('3b_S1_side_bloch.png')
 
 ax.set_zticks([])
 ax.set_zlabel('')
 ax.azim = 270
 ax.elev = 90
-save('S1_above_bloch.png')
+# save('S1_above_bloch.png')
 
 plt.close()
 print("Phase on |1> figures stored")
