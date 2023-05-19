@@ -46,7 +46,7 @@ def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2
                   b_eq=b,
                   bounds=(-1,1),
                  )
-    return barrier.get_sym_sum(res.x, prec)
+    return barrier.get_sym_sum(res.x, prec=prec)
 
 # Step 2
 def scipy_find_constant(barrier_sym, states, init=[], prec=2):
@@ -138,6 +138,6 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     if verbose: print("Step 3: Checking constant (c)...")
     scipy_check_constant(c, b, n, unsafe=unsafe, prec=prec)
     if verbose: print("Constant found: c = " + str(c))
-    barrier_out = round_sympy_expr(c + b)
+    barrier_out = round_sympy_expr(c + b, prec=prec)
     if verbose: print("Generated barrier: B(z) = b + c = " + str(barrier_out) + "\n")
     return barrier_out

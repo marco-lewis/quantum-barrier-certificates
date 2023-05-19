@@ -19,11 +19,11 @@ def generate_term_powers(k, num_complex_variables):
     less_than_k = filter(lambda c: sum(c) <= k, l)
     return list(less_than_k)
 
-def round_sympy_expr(expr):
+def round_sympy_expr(expr, prec=2):
     ret_expr = expr
     for a in sym.preorder_traversal(expr):
         if isinstance(a, sym.Float):
-            ret_expr = ret_expr.subs(a, round(a, 2))
+            ret_expr = ret_expr.subs(a, round(a, prec))
     return ret_expr
 
 def get_real_from_model(model, var, prec=2):
