@@ -14,7 +14,6 @@ barrier = scipy_find_k_barrier(2, H,
                                verbose=1,
                                obj_func_idxs=[12]
                                )
-print_barrier(barrier)
 
 print("5.2: 2. Close to One experiment")
 init_constraints = close_to_one
@@ -26,4 +25,3 @@ barrier = scipy_find_k_barrier(2, H,
                                verbose=1,
                                obj_func_idxs=[7]
                                )
-print_barrier(barrier)

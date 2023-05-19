@@ -4,8 +4,6 @@ import numpy as np
 import sympy as sym
 from scipy.optimize import NonlinearConstraint
 
-def print_barrier(barrier): print("Generated barrier: ", barrier, "\n")
-
 def qubit_simple_constraints(zero_bounds, one_bounds):
     def f(x): return [x[0]**2 + x[1]**2,
                       x[2]**2 + x[3]**2,

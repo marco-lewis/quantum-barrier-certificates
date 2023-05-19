@@ -18,7 +18,6 @@ barrier = scipy_find_k_barrier(k, H,
                                obj_func_idxs=[12]
                                )
 
-print_barrier(barrier)
 barrier = 3*barrier
 print("Scaled: ", barrier)
 z0 = sym.Symbol("z0", complex=True)

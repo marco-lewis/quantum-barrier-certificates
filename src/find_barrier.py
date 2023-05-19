@@ -96,14 +96,14 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     minimum = round(res.fun, prec)
     if -minimum >= c : raise Exception(str(barrier_sym) + "\nError: proposed barrier has part of unsafe in same contour as initial region")
 
-# Setup coefficients as ndarray
 def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_func_idxs=[]):
+    # Step 0 - setup data structures
     z = -1j
     n = round(len(H))
     term_powers = generate_term_powers(k, n)
     coeff_num = len(term_powers)
 
-    if verbose: print("Converting dynamical system...")
+    if verbose: print("Step 0: Converting dynamical system...")
     sums = []
     for i in range(n):
         terms = []
@@ -118,15 +118,18 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
     
     id_coeff = np.identity(coeff_num)
     barrier = FuncSum(list([FuncTerm(i, t) for i, t in zip(id_coeff, term_powers)]))
-    if verbose: print("Finding polynomial...")
+
+    if verbose: print("Step 1: Finding polynomial (b)...")
     warnings.simplefilter("ignore", OptimizeWarning)
     b = scipy_find_b(barrier, n, f_vec, term_powers, prec, obj_func_idxs)
-    if verbose: print("Polynomial found: ", b)
+    if verbose: print("Polynomial found: b = " + str(b))
     
-    if verbose: print("Finding constant...")
+    if verbose: print("Step 2: Finding constant (c)...")
     c = scipy_find_constant(b, n, init=init, prec=prec)
-    if verbose: print("Checking...")
+
+    if verbose: print("Step 3: Checking constant (c)...")
     scipy_check_constant(c, b, n, unsafe=unsafe, prec=prec)
-    if verbose: print("Constant found: ", c)
-    
-    return round_sympy_expr(c + b)
+    if verbose: print("Constant found: c = " + str(c))
+    barrier_out = round_sympy_expr(c + b)
+    if verbose: print("Generated barrier: ", barrier_out, "\n")
+    return barrier_out

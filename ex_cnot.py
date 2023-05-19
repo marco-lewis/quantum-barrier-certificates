@@ -16,7 +16,6 @@ b_cnot = scipy_find_k_barrier(2, H,
                               verbose=1,
                               obj_func_idxs=[40]
                               )
-print_barrier(b_cnot)
 
 print("5.3: 1b. Start near 01")
 def init(x): return [x[2]**2 + x[3]**2,
@@ -32,7 +31,6 @@ b_cnot = scipy_find_k_barrier(2, H,
                               verbose=1,
                               obj_func_idxs=[31]
                               )
-print_barrier(b_cnot)
 
 print("5.3: 2a. Start near 10")
 def init(x): return [x[0]**2 + x[1]**2,
@@ -52,7 +50,6 @@ b_cnot = scipy_find_k_barrier(2, H,
                               verbose=1,
                               obj_func_idxs=[16]
                               )
-print_barrier(b_cnot)
 
 print("5.3: 2b. Start near 11")
 def init(x): return [x[0]**2 + x[1]**2,
@@ -72,4 +69,3 @@ b_cnot = scipy_find_k_barrier(2, H,
                               verbose=1,
                               obj_func_idxs=[16]
                               )
-print_barrier(b_cnot)
