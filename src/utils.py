@@ -4,6 +4,11 @@ import numpy as np
 import sympy as sym
 from scipy.optimize import NonlinearConstraint
 
+z0 = sym.Symbol("z0", complex = True)
+z1 = sym.Symbol("z1", complex = True)
+z2 = sym.Symbol("z2", complex = True)
+z3 = sym.Symbol("z3", complex = True)
+
 def qubit_simple_constraints(zero_bounds, one_bounds):
     def f(x): return [x[0]**2 + x[1]**2,
                       x[2]**2 + x[3]**2,

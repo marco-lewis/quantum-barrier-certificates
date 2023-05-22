@@ -9,11 +9,12 @@ print("5.1: Hadamard Barrier")
 init_constraints = close_to_zero
 unsafe_constraints = qubit_simple_constraints((0,0.1),(0.9,1))
 
+expr = z0 * z0.conjugate()
 barrier = scipy_find_k_barrier(k, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
                                verbose=1,
-                               obj_func_idxs=[12]
+                               objective_expressions=[expr]
                                )
 
 barrier = 3*barrier

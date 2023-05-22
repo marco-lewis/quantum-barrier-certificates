@@ -17,7 +17,7 @@ def diff_fsum(funcsum, var_loc):
     return FuncSum(new_fsum)
 
 # Step 1
-def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2, obj_func_idxs=[]):
+def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2, objective_expressions=[]):
     # Make appropriate conditions using representation
     dbdz = FuncVec([diff_fsum(barrier, i) for i in range(states)])
     dbdzconj = FuncVec([diff_fsum(barrier, i) for i in range(states, 2*states)])
@@ -33,12 +33,21 @@ def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2
     
     A = np.array(A_dbdt + A_conj)
     b = np.array(b_dbdt + b_conj)
+
     # Minimize vector (min c^T x subject to ...)
-    if len(obj_func_idxs) == 0:
+    objective_idxs = []
+    if isinstance(objective_expressions[0], int): print(barrier.fterms[objective_expressions[0]].get_var_sym())
+    for expr in objective_expressions:
+        i = 0
+        for i in range(len(barrier.fterms)):
+            term = barrier.fterms[i]
+            if term.get_var_sym() == expr: objective_idxs.append(i)
+
+    if len(objective_idxs) == 0:
         c = np.ones(len(term_powers))
     else:
         c = np.zeros(len(term_powers))
-        for idx in obj_func_idxs: c[idx] = 1
+        for idx in objective_idxs: c[idx] = 1
 
     # Perform linear programming computation
     res = linprog(c,
@@ -102,7 +111,7 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     if -minimum >= c : raise Exception(str(barrier_sym) + "\nError: proposed barrier has part of unsafe in same contour as initial region")
 
 # Algorithm 1
-def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_func_idxs=[]):
+def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, objective_expressions=[]):
     z = -1j
     n = round(len(H))
     term_powers = generate_term_powers(k, n)
@@ -130,7 +139,7 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_fu
 
     if verbose: print("Step 1: Finding polynomial (b)...")
     warnings.simplefilter("ignore", OptimizeWarning)
-    b = scipy_find_b(barrier, n, f_vec, term_powers, prec, obj_func_idxs)
+    b = scipy_find_b(barrier, n, f_vec, term_powers, prec, objective_expressions)
     if verbose: print("Polynomial found: b = " + str(b))
     
     if verbose: print("Step 2: Finding constant (c)...")
