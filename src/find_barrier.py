@@ -103,7 +103,6 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
 
 # Algorithm 1
 def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, obj_func_idxs=[]):
-    # Step 0 - setup data structures
     z = -1j
     n = round(len(H))
     term_powers = generate_term_powers(k, n)
