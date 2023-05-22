@@ -17,8 +17,8 @@ barrier = scipy_find_k_barrier(k, H,
                                )
 
 barrier = 3*barrier
-print("Scaled: ", barrier)
+print("Scaled (3*B(z)):\n", barrier)
 z0 = sym.Symbol("z0", complex=True)
 z1 = sym.Symbol("z1", complex=True)
 expr = 1 - z0*z0.conjugate()
-print("Substituting z1*conj(z1) = 1 - z0*conj(z0): ", barrier.subs(z1*z1.conjugate(), expr))
+print("Substituting z1*conj(z1) = 1 - z0*conj(z0):\n", sym.simplify(barrier.subs(z1*z1.conjugate(), expr)))
