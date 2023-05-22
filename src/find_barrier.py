@@ -40,7 +40,7 @@ def scipy_find_b(barrier : FuncSum, states, f_vec : FuncVec, term_powers, prec=2
         c = np.zeros(len(term_powers))
         for idx in obj_func_idxs: c[idx] = 1
 
-    # Negate A doesn't matter unless used for A_ub
+    # Perform linear programming computation
     res = linprog(c,
                   A_eq=A,
                   b_eq=b,
@@ -63,6 +63,7 @@ def scipy_find_constant(barrier_sym, states, init=[], prec=2):
     bounds = Bounds([-1]*2*states, [1]*2*states)
     guess = [0]*2*states
     
+    # Perform minimisation
     res = minimize(obj,
                    guess,
                    method='trust-constr',
@@ -88,6 +89,7 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
     bounds = Bounds([-1]*2*states, [1]*2*states)
     guess = [0]*2*states
     
+    # Perform minimisation
     res = minimize(obj,
                    guess,
                    method='trust-constr',

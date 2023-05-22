@@ -2,6 +2,8 @@ from src.find_barrier import *
 from src.utils import *
 
 H = [[0,0,0,0],[0,0,0,0],[0,0,1,-1],[0,0,-1,1]]
+k = 2
+
 print("5.3: 1a. Start near 00")
 def init(x): return [x[0]**2 + x[1]**2,
                      x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2]
@@ -10,7 +12,7 @@ def unsafe(x): return [x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2
                      x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2]
 unsafe_constraints= [NonlinearConstraint(unsafe, [.11,1], [1,1])]
 
-b_cnot = scipy_find_k_barrier(2, H,
+b_cnot = scipy_find_k_barrier(k, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
                               verbose=1,
@@ -25,7 +27,7 @@ def unsafe(x): return [x[0]**2 + x[1]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2
                      x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2]
 unsafe_constraints= [NonlinearConstraint(unsafe, [.11,1], [1,1])]
 
-b_cnot = scipy_find_k_barrier(2, H,
+b_cnot = scipy_find_k_barrier(k, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
                               verbose=1,
@@ -44,7 +46,7 @@ def unsafe(x): return [x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2,
                      x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2]
 unsafe_constraints= [NonlinearConstraint(unsafe, [.5,0,1], [1,.5,1])]
 
-b_cnot = scipy_find_k_barrier(2, H,
+b_cnot = scipy_find_k_barrier(k, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
                               verbose=1,
@@ -63,7 +65,7 @@ def unsafe(x): return [x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2,
                      x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2 + x[6]**2 + x[7]**2]
 unsafe_constraints= [NonlinearConstraint(unsafe, [.5,0,1], [1,.5,1])]
 
-b_cnot = scipy_find_k_barrier(2, H,
+b_cnot = scipy_find_k_barrier(k, H,
                               init=init_constraints,
                               unsafe=unsafe_constraints,
                               verbose=1,
