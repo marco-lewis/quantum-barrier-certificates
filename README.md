@@ -24,8 +24,8 @@ The examples are tested on a virtual machine using Python 3.9.5.
 
     Figures are available in ```media/Images/```.
 
-## File Navigation
-
+## Project Navigation
+```
 ├── media
 |   ├── Animations - folder where generated animations are stored in
 |   |   ├── .animations
@@ -47,3 +47,4 @@ The examples are tested on a virtual machine using Python 3.9.5.
 ├── README.md
 ├── requirements.txt - Required packages for environment
 └── .gitignore
+```
