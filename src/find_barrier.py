@@ -81,7 +81,7 @@ def scipy_find_constant(barrier_sym, states, init=[], prec=2):
                    bounds=bounds,
                    hess=lambda x: np.zeros((2*states,))
                   )
-    minimum = round(res.fun, prec)
+    minimum = res.fun
     return minimum
 
 # Step 3
@@ -107,11 +107,11 @@ def scipy_check_constant(c, barrier_sym, states, unsafe=[], prec=2):
                    bounds=bounds,
                    hess=lambda x: np.zeros((2*states,))
                   )
-    minimum = round(res.fun, prec)
+    minimum = res.fun
     if -minimum >= c : raise Exception(str(barrier_sym) + "\nError: proposed barrier has part of unsafe in same contour as initial region")
 
 # Algorithm 1
-def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, objective_expressions=[]):
+def scipy_find_k_barrier(k, H, init=[], unsafe=[], scalar=1, prec=2, verbose=False, objective_expressions=[]):
     z = -1j
     n = round(len(H))
     term_powers = generate_term_powers(k, n)
@@ -148,6 +148,6 @@ def scipy_find_k_barrier(k, H, init=[], unsafe=[], prec=2, verbose=False, object
     if verbose: print("Step 3: Checking constant (c)...")
     scipy_check_constant(c, b, n, unsafe=unsafe, prec=prec)
     if verbose: print("Constant found: c = " + str(c))
-    barrier_out = round_sympy_expr(c + b, prec=prec)
+    barrier_out = round_sympy_expr(scalar*(c + b), prec=prec)
     if verbose: print("Generated barrier: B(z) = b + c = " + str(barrier_out) + "\n")
     return barrier_out

@@ -14,11 +14,10 @@ barrier = scipy_find_k_barrier(k, H,
                                init=init_constraints,
                                unsafe=unsafe_constraints,
                                verbose=1,
+                               scalar=3,
                                objective_expressions=[expr]
                                )
 
-barrier = 3*barrier
-print("Scaled (3*B(z)):\n", barrier)
 z0 = sym.Symbol("z0", complex=True)
 z1 = sym.Symbol("z1", complex=True)
 expr = 1 - z0*z0.conjugate()

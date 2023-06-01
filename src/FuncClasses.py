@@ -54,7 +54,7 @@ class FuncSum():
         if isinstance(model, np.ndarray):
             for term, m in zip(self.fterms, model):
                 v = term.get_var_sym()
-                s += round(m, prec) * v
+                s += m * v
         else:
             for term in self.fterms:
                 v = term.get_var_sym()
