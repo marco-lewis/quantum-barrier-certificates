@@ -20,6 +20,6 @@ barrier = scipy_find_k_barrier(k, H,
 
 z0 = sym.Symbol("z0", complex=True)
 z1 = sym.Symbol("z1", complex=True)
-expr = 1 - z0*z0.conjugate()
-barrier = sym.simplify(barrier.subs(z1*z1.conjugate(), expr))
-print("Substituting z1*conj(z1) = 1 - z0*conj(z0):\n", barrier)
+# expr = 1 - z0*z0.conjugate()
+# barrier = sym.simplify(barrier.subs(z1*z1.conjugate(), expr))
+# print("Substituting z1*conj(z1) = 1 - z0*conj(z0):\n", barrier)
